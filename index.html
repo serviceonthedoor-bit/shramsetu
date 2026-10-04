@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ShramSetu – Manpower for industry, work for skilled hands</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..125,500..900&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#14213d;--paper:#f3f5f7;--hv:#ffc400;--steel:#5b6b82;--line:#d5dbe3;--card:#fff;--ok:#1b7f4b;--err:#b3261e}
+*{box-sizing:border-box}
+[hidden]{display:none !important}
+body{margin:0;font:17px/1.55 "Source Sans 3",system-ui,sans-serif;background:var(--paper);color:var(--ink)}
+h1,h2,h3,.brand{font-family:Archivo,sans-serif;font-stretch:112%;letter-spacing:-.01em;line-height:1.1;margin:0}
+header{display:flex;justify-content:space-between;align-items:center;padding:14px 5vw;background:var(--ink);color:#fff;position:sticky;top:0;z-index:5}
+.brand{font-weight:800;font-size:22px}.brand b{color:var(--hv)}
+nav a{color:#fff;text-decoration:none;margin-left:20px;font-weight:600;font-size:15px}nav a:hover{color:var(--hv)}
+.hero{background:var(--ink);color:#fff;padding:56px 5vw 0;background-image:repeating-linear-gradient(135deg,transparent 0 22px,rgba(255,196,0,.07) 22px 44px)}
+.hero h1{font-size:clamp(34px,6vw,64px);font-weight:900;max-width:15ch}
+.hero p{max-width:52ch;color:#c9d2e0;margin:18px 0 32px}
+.doors{display:grid;grid-template-columns:1fr 1fr;max-width:900px}
+.door{padding:26px 28px;cursor:pointer;border:0;text-align:left;font:inherit;color:var(--ink)}
+.door h3{font-size:24px;font-weight:800}.door span{display:block;margin-top:6px;font-size:15px}
+.door.a{background:var(--hv)}.door.b{background:#fff;border-left:6px solid var(--ink)}.door:hover{filter:brightness(.96)}
+section{padding:56px 5vw;max-width:1100px;margin:0 auto}
+h2{font-size:clamp(26px,3.6vw,38px);font-weight:800;margin-bottom:8px}
+.sub{color:var(--steel);margin:0 0 24px;max-width:62ch}
+.plans{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:18px}
+.plan{background:var(--card);border:2px solid var(--line);padding:22px;display:flex;flex-direction:column}
+.plan.hot{border-color:var(--ink);box-shadow:8px 8px 0 var(--hv)}
+.price{font-family:Archivo;font-weight:800;font-size:32px;margin:10px 0 2px}.price small{font:400 15px "Source Sans 3";color:var(--steel)}
+.plan ul{padding-left:18px;margin:12px 0 20px;flex:1}
+.btn{background:var(--ink);color:#fff;border:0;padding:12px 20px;font:600 16px "Source Sans 3";cursor:pointer}
+.btn:hover{background:#0c1530}.btn.y{background:var(--hv);color:var(--ink)}.btn.sm{padding:8px 14px;font-size:15px}.btn:disabled{opacity:.6}
+:focus-visible{outline:3px solid var(--hv);outline-offset:2px}
+.tabs{display:flex;flex-wrap:wrap}
+.tab{padding:12px 22px;background:#e5e9ef;border:0;font:600 16px "Source Sans 3";cursor:pointer;color:var(--steel)}
+.tab[aria-selected=true]{background:var(--card);color:var(--ink);box-shadow:inset 0 4px 0 var(--hv)}
+.panel{background:var(--card);padding:28px;border:1px solid var(--line)}
+form{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+label{display:flex;flex-direction:column;font-weight:600;font-size:15px;gap:5px}
+input,select,textarea{font:inherit;padding:11px;border:1.5px solid var(--line);background:#fafbfc;color:var(--ink);width:100%}
+.full{grid-column:1/-1}
+.msg{margin-top:12px;font-weight:600}.msg.ok{color:var(--ok)}.msg.err{color:var(--err)}
+.filters{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:18px}
+.jobs{display:grid;gap:12px}
+.job{background:var(--card);border:1px solid var(--line);border-left:6px solid var(--hv);padding:16px 20px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:center}
+.job h3{font-size:19px}.meta{color:var(--steel);font-size:15px;margin-top:4px}
+.tag{display:inline-block;background:#eef1f5;padding:2px 9px;font-size:14px;margin:0 6px 4px 0}
+.tag.v{background:#e3f4ea;color:var(--ok);font-weight:600}
+.wk{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
+.wcard{background:var(--card);border:1px solid var(--line);padding:14px 16px}
+.wcard .lock{filter:blur(4px);user-select:none}
+.idcard{border:3px solid var(--ink);background:var(--hv);padding:16px 20px;max-width:340px;margin-top:14px}
+.idcard h3{font-size:20px}.idcard p{margin:4px 0}
+footer{background:var(--ink);color:#9fb0c8;padding:28px 5vw;font-size:15px}
+.note{background:#fff8dc;border:1px solid var(--hv);padding:10px 14px;font-size:15px;margin-bottom:16px}
+dialog{border:0;padding:0;max-width:440px;width:92vw;box-shadow:10px 10px 0 var(--hv)}
+dialog::backdrop{background:rgba(20,33,61,.6)}
+.dlg{padding:24px}.dlg h3{font-size:22px;margin-bottom:6px}
+.gw{display:flex;gap:12px;align-items:center;padding:12px;border:2px solid var(--line);margin-top:8px;cursor:pointer;font-weight:600}
+.gw input{width:auto}.gw small{display:block;font-weight:400;color:var(--steel)}.gw:has(input:checked){border-color:var(--ink);background:#fffbe8}
+.row{display:flex;gap:10px;margin-top:16px;justify-content:flex-end}
+@media(max-width:640px){.doors{grid-template-columns:1fr}.door.b{border-left:0;border-top:6px solid var(--ink)}nav{display:none}}
+</style>
+</head>
+<body>
+<header><div class="brand">Shram<b>Setu</b></div>
+<nav><a href="#jobs">Open jobs</a><a href="#workers">Find workers</a><a href="#plans">Plans</a><a href="#join">Register</a></nav><button class="btn y sm" id="loginBtn" type="button">Employer login</button></header>
+
+<div class="hero">
+  <h1>Trained hands for your shop floor.</h1>
+  <p>Industries subscribe to get verified semi-skilled and unskilled workers on demand. Workers register once with just a mobile number and get steady placements.</p>
+  <div class="doors">
+    <button class="door a" data-go="employer"><h3>I need workers</h3><span>Factories, warehouses, contractors</span></button>
+    <button class="door b" data-go="worker"><h3>I am looking for work</h3><span>Helpers, operators, welders, drivers</span></button>
+  </div>
+</div>
+
+<section id="jobs">
+  <h2>Open requirements</h2>
+  <p class="sub">Only employers we have checked are listed. Contact details stay private; apply with your mobile number and we call you.</p>
+  <div class="filters">
+    <input id="q" type="search" placeholder="Role or keyword" aria-label="Search role">
+    <input id="fcity" type="search" placeholder="City" aria-label="City">
+    <select id="fcat" aria-label="Category"><option value="">All categories</option></select>
+    <select id="fwage" aria-label="Minimum daily wage"><option value="0">Any wage</option><option value="500">₹500+ / day</option><option value="700">₹700+ / day</option><option value="900">₹900+ / day</option></select>
+    <select id="fsort" aria-label="Sort"><option value="new">Newest first</option><option value="wage">Highest wage</option></select>
+  </div>
+  <div id="joblist" class="jobs" aria-live="polite"></div>
+</section>
+
+<section id="workers">
+  <h2>Find workers</h2>
+  <p class="sub">A preview of verified workers in our database. Subscribed industries see full name, phone and can shortlist directly.</p>
+  <div id="wklist" class="wk"></div>
+</section>
+
+<section id="dash" hidden>
+  <h2>Your worker dashboard</h2>
+  <p class="sub" id="dInfo"></p>
+  <div class="filters"><input id="dq" type="search" placeholder="City or name" aria-label="Search workers"><select id="dcat" aria-label="Skill"><option value="">All skills</option></select><button class="btn sm" id="dLogout" type="button">Log out</button></div>
+  <div id="dlist" class="wk"></div>
+</section>
+
+<section id="plans">
+  <h2>Plans</h2>
+  <p class="sub">Prices are placeholders. Edit the PLANS block in the script.</p>
+  <h3 style="margin-bottom:12px">For industries (subscription)</h3><div class="plans" id="indPlans"></div>
+  <h3 style="margin:32px 0 12px">For workers (membership)</h3><div class="plans" id="wrkPlans"></div>
+</section>
+
+<section id="join">
+  <h2>Register</h2>
+  <p class="sub">Paid plans go to a secure payment step after you submit.</p>
+  <div class="tabs" role="tablist">
+    <button class="tab" role="tab" id="t-employer" aria-selected="true">Industry / Employer</button>
+    <button class="tab" role="tab" id="t-worker" aria-selected="false">Worker</button>
+    <button class="tab" role="tab" id="t-requirement" aria-selected="false">Post a requirement</button>
+  </div>
+  <div class="panel">
+    <div class="note" id="demoNote" hidden>Demo mode: no Google Sheet connected and payments are simulated. Nothing is saved or charged.</div>
+    <form id="f-employer" data-type="employer">
+      <label>Company name<input name="company" required></label>
+      <label>Contact person<input name="contact" required></label>
+      <label>Mobile<input name="phone" type="tel" pattern="[0-9]{10}" maxlength="10" required placeholder="10 digits"></label>
+      <label>Email<input name="email" type="email"></label>
+      <label>City / industrial area<input name="city" required></label>
+      <label>Industry type<select name="industry"><option>Manufacturing</option><option>Warehouse &amp; logistics</option><option>Construction</option><option>Hospitality</option><option>Other</option></select></label>
+      <label>Plan<select name="plan" class="planSel"></select></label>
+      <label>Workers needed per month<input name="headcount" type="number" min="1"></label>
+      <label>GST number (optional)<input name="gst" maxlength="15"></label>
+      <div class="full"><button class="btn y" type="submit">Register and continue</button><div class="msg"></div></div>
+    </form>
+    <form id="f-worker" data-type="worker" hidden>
+      <label>Full name<input name="name" required></label>
+      <label>Mobile<input name="phone" type="tel" pattern="[0-9]{10}" maxlength="10" required placeholder="10 digits"></label>
+      <label>Age<input name="age" type="number" min="18" max="65" required></label>
+      <label>City<input name="city" required></label>
+      <label>Skill category<select name="category" class="catSel" required></select></label>
+      <label>Experience (years)<input name="experience" type="number" min="0" max="45"></label>
+      <label>Education<select name="education"><option>No formal</option><option>8th</option><option>10th</option><option>12th</option><option>ITI</option><option>Diploma</option></select></label>
+      <label>Expected daily wage (₹)<input name="wage" type="number" min="0"></label>
+      <label>Membership<select name="plan" class="wplanSel"></select></label>
+      <label>Willing to relocate<select name="relocate"><option>Yes</option><option>No</option></select></label>
+      <div class="full"><button class="btn y" type="submit">Join and continue</button><div class="msg"></div></div>
+    </form>
+    <form id="f-requirement" data-type="requirement" hidden>
+      <label>Company name<input name="company" required></label>
+      <label>Mobile<input name="phone" type="tel" pattern="[0-9]{10}" maxlength="10" required></label>
+      <label>Role needed<input name="role" required placeholder="e.g. Machine helper"></label>
+      <label>Category<select name="category" class="catSel"></select></label>
+      <label>Number of workers<input name="count" type="number" min="1" required></label>
+      <label>City<input name="city" required></label>
+      <label>Daily wage offered (₹)<input name="wage" type="number" min="0"></label>
+      <label>Start date<input name="start" type="date"></label>
+      <label class="full">Details (shift, accommodation, food etc.)<textarea name="details" rows="3"></textarea></label>
+      <div class="full"><button class="btn y" type="submit">Post requirement</button><div class="msg"></div></div>
+    </form>
+  </div>
+</section>
+
+<footer>ShramSetu · Name and contact details are placeholders. Add terms, privacy and refund policy before launch.</footer>
+
+<dialog id="otpDlg"><div class="dlg">
+  <h3 id="oTitle">Verify your mobile</h3>
+  <div id="oS1"><label style="margin-top:10px">Mobile<input id="oPhone" type="tel" inputmode="numeric" maxlength="10" placeholder="10 digits"></label>
+    <div class="row"><button class="btn sm" type="button" id="oCancel1" style="background:#e5e9ef;color:var(--ink)">Cancel</button><button class="btn y sm" type="button" id="oSend">Send OTP</button></div></div>
+  <div id="oS2" hidden><p class="meta" id="oInfo"></p>
+    <label style="margin-top:10px">6-digit OTP<input id="oCode" inputmode="numeric" maxlength="6" autocomplete="one-time-code"></label>
+    <div class="row"><button class="btn sm" type="button" id="oResend" style="background:#e5e9ef;color:var(--ink)">Resend</button><button class="btn y sm" type="button" id="oVerify">Verify</button></div></div>
+  <div class="msg" id="oMsg" aria-live="polite"></div>
+</div></dialog>
+
+<dialog id="applyDlg"><form method="dialog" class="dlg" id="applyForm" style="display:block">
+  <h3>Apply for <span id="aRole"></span></h3><p class="meta" id="aCo"></p>
+  <label style="margin-top:12px">Your name<input name="name" required></label>
+  <label style="margin-top:12px">Mobile<input name="phone" type="tel" pattern="[0-9]{10}" maxlength="10" required></label>
+  <div class="msg" id="aMsg"></div>
+  <div class="row"><button class="btn sm" type="button" id="aCancel" style="background:#e5e9ef;color:var(--ink)">Close</button><button class="btn y sm" type="submit">Apply</button></div>
+</form></dialog>
+
+<dialog id="payDlg"><div class="dlg">
+  <h3>Complete payment</h3>
+  <p class="meta" id="payFor"></p>
+  <div id="gwList"></div>
+  <div class="msg" id="payMsg"></div>
+  <div class="row"><button class="btn sm" type="button" id="payLater" style="background:#e5e9ef;color:var(--ink)">Pay later</button><button class="btn y sm" type="button" id="payGo">Pay</button></div>
+</div></dialog>
+
+<script>
+/* ============ CONFIG – edit this block ============ */
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyNNwi8EunvEEkxUKnBlAxcG3TB0EP8-lJK7riGyNvZ9Vc_mvt5cNUW6IdEoy5nzDc/exec";          // Google Apps Script web app URL (see Code.gs)
+const PAYMENT_MODE = "demo";    // "demo" = simulated. "live" = real gateways (see wiring steps)
+const RAZORPAY_KEY_ID = "";     // PUBLIC key only (rzp_test_... / rzp_live_...). Never put the secret here.
+const CATEGORIES = ["Helper / Loader","Machine operator","Welder / Fitter","Packer","Driver","Electrician","Housekeeping / Security","Other"];
+const PLANS = {
+  industry:[
+    {id:"Starter",amt:4999,per:"/ month",pts:["Up to 10 workers placed","Replacement within 72 hrs","Worker database: 25 contacts"]},
+    {id:"Growth",amt:14999,per:"/ month",pts:["Up to 40 workers placed","Replacement within 48 hrs","Dedicated coordinator","Unlimited database contacts"],hot:true},
+    {id:"Enterprise",amt:0,label:"Custom",per:"",pts:["Bulk and contract staffing","On-site supervisor","Payroll and compliance support"]}],
+  worker:[
+    {id:"Basic (Free)",amt:0,per:"",pts:["Profile in our database","Job alerts by call"]},
+    {id:"Member",amt:299,per:"/ year",pts:["Priority for placements","Verified badge","Training sessions"],hot:true}]
+};
+/* Gateways shown at checkout. Add or remove entries freely. */
+const GATEWAYS = {
+  razorpay:{label:"Razorpay",note:"UPI, cards, netbanking, wallets"},
+  paytm:{label:"Paytm",note:"Paytm wallet, UPI, cards"},
+  phonepe:{label:"PhonePe",note:"UPI and cards"},
+  cashfree:{label:"Cashfree",note:"UPI, cards, netbanking"},
+  upi:{label:"Direct UPI / bank transfer",note:"Manual: we confirm after you pay"}
+};
+const SAMPLE_JOBS=[
+  {id:2,role:"Machine helper",company:"Verified employer",city:"Ghaziabad",category:"Helper / Loader",count:12,wage:550},
+  {id:3,role:"CNC operator",company:"Verified employer",city:"Noida",category:"Machine operator",count:4,wage:850},
+  {id:4,role:"Warehouse packer",company:"Verified employer",city:"Sahibabad",category:"Packer",count:20,wage:500}];
+const SAMPLE_WORKERS=[
+  {name:"Ramesh K.",category:"Welder / Fitter",city:"Ghaziabad",experience:6,verified:true},
+  {name:"Sunita D.",category:"Packer",city:"Noida",experience:3,verified:true},
+  {name:"Imran A.",category:"Driver",city:"Delhi",experience:9,verified:true},
+  {name:"Pooja S.",category:"Helper / Loader",city:"Sahibabad",experience:2,verified:false}];
+
+/* ============ Payment adapters ============ */
+/* Each adapter takes an order {amount, plan, kind, name, phone, ref} and resolves {id, gateway}. */
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+const demoPay=async(g,o)=>{await sleep(900);return{id:"DEMO-"+Date.now(),gateway:g}};
+const ADAPTERS={
+  razorpay:async o=>{
+    if(PAYMENT_MODE!=="live")return demoPay("razorpay",o);
+    await loadScript("https://checkout.razorpay.com/v1/checkout.js");
+    const ord=await api({type:"createOrder",gateway:"razorpay",kind:o.kind,plan:o.plan,phone:o.phone,ref:o.ref}); // server fixes the amount
+    if(!ord.ok)throw new Error(ord.error);
+    return new Promise((res,rej)=>{
+      const rz=new Razorpay({key:RAZORPAY_KEY_ID,amount:ord.amount,currency:"INR",order_id:ord.order_id,name:"ShramSetu",description:o.plan,
+        prefill:{name:o.name,contact:o.phone},
+        handler:async r=>{const v=await api({type:"verifyPayment",gateway:"razorpay",...r,ref:o.ref,plan:o.plan,kind:o.kind,phone:o.phone});
+          v.ok?res({id:r.razorpay_payment_id,gateway:"razorpay",verified:true}):rej(new Error("Verification failed"))},
+        modal:{ondismiss:()=>rej(new Error("Payment cancelled"))}});
+      rz.open();
+    });
+  },
+  /* TODO live wiring: see steps. Until then these run as demo, or fail clearly in live mode. */
+  paytm:async o=>PAYMENT_MODE==="live"?Promise.reject(new Error("Paytm not wired yet")):demoPay("paytm",o),
+  phonepe:async o=>PAYMENT_MODE==="live"?Promise.reject(new Error("PhonePe not wired yet")):demoPay("phonepe",o),
+  cashfree:async o=>PAYMENT_MODE==="live"?Promise.reject(new Error("Cashfree not wired yet")):demoPay("cashfree",o),
+  upi:async o=>{ // manual: show your UPI ID, mark as Pending in the sheet
+    return{id:"MANUAL-"+Date.now(),gateway:"upi",pending:true};
+  }
+};
+function loadScript(src){return new Promise((res,rej)=>{if(document.querySelector(`script[src="${src}"]`))return res();const s=document.createElement("script");s.src=src;s.onload=res;s.onerror=()=>rej(new Error("Could not load payment script"));document.head.appendChild(s)})}
+
+/* ============ Helpers ============ */
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const esc=t=>String(t??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const inr=n=>"₹"+Number(n).toLocaleString("en-IN");
+async function api(data){
+  if(!SCRIPT_URL)return demoApi(data);
+  const r=await fetch(SCRIPT_URL,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(data)}); // text/plain avoids CORS preflight
+  return r.json();
+}
+let jobs=[],workers=[];
+async function demoApi(d){await sleep(300);
+  if(d.type==="otpSend")return{ok:true,demoOtp:"123456"};
+  if(d.type==="otpVerify")return d.otp==="123456"?{ok:true,token:"demo"}:{ok:false,error:"Wrong OTP. The demo OTP is 123456."};
+  if(d.type==="listWorkers")return{ok:true,plan:"Starter",limit:25,used:0,workers:SAMPLE_WORKERS.map((w,i)=>({...w,ref:"WK-DEMO"+i,wage:600}))};
+  if(d.type==="revealContact")return{ok:true,phone:"9876543210",used:1};
+  return{ok:true,demo:true}}
+
+/* ============ Render ============ */
+function renderPlans(){
+  const mk=(list,el,kind)=>{$(el).innerHTML=list.map(p=>`<div class="plan${p.hot?" hot":""}"><h3>${p.id}</h3><div class="price">${p.label||inr(p.amt)}<small> ${p.per}</small></div><ul>${p.pts.map(x=>`<li>${x}</li>`).join("")}</ul><button class="btn${p.hot?" y":""}" data-plan="${p.id}" data-kind="${kind}">Choose ${p.id}</button></div>`).join("")};
+  mk(PLANS.industry,"#indPlans","employer");mk(PLANS.worker,"#wrkPlans","worker");
+  $$(".planSel").forEach(s=>s.innerHTML=PLANS.industry.map(p=>`<option>${p.id}</option>`).join(""));
+  $$(".wplanSel").forEach(s=>s.innerHTML=PLANS.worker.map(p=>`<option>${p.id}</option>`).join(""));
+  $$(".catSel").forEach(s=>s.innerHTML=CATEGORIES.map(c=>`<option>${c}</option>`).join(""));
+  $("#fcat").innerHTML+=CATEGORIES.map(c=>`<option>${c}</option>`).join("");
+}
+function renderJobs(){
+  const q=$("#q").value.toLowerCase(),c=$("#fcat").value,city=$("#fcity").value.toLowerCase(),w=+$("#fwage").value;
+  let list=jobs.filter(j=>(!c||j.category===c)&&(!q||j.role.toLowerCase().includes(q))&&(!city||String(j.city).toLowerCase().includes(city))&&(+j.wage||0)>=w);
+  if($("#fsort").value==="wage")list=[...list].sort((a,b)=>(+b.wage||0)-(+a.wage||0));
+  $("#joblist").innerHTML=list.length?list.map(j=>`<div class="job"><div><h3>${esc(j.role)}</h3><div class="meta">${esc(j.company)} · ${esc(j.city)}</div><div style="margin-top:8px"><span class="tag v">Verified employer</span><span class="tag">${esc(j.category)}</span><span class="tag">${esc(j.count)} openings</span></div></div><div><strong>${j.wage?inr(j.wage)+" / day":"Wage on call"}</strong><br><button class="btn sm" style="margin-top:8px" data-apply="${esc(j.id)}">Apply</button></div></div>`).join(""):"<p>No requirements match these filters. Try fewer filters or register to get a call.</p>";
+}
+function renderWorkers(){
+  $("#wklist").innerHTML=workers.map(w=>`<div class="wcard"><strong>${esc(w.name)}</strong> ${w.verified?'<span class="tag v">Verified</span>':""}<div class="meta">${esc(w.category)} · ${esc(w.city)} · ${esc(w.experience)} yrs</div><div class="meta lock" aria-hidden="true">+91 98••• ••••0</div><button class="btn sm" style="margin-top:8px" data-plan="Starter" data-kind="employer">Subscribe to unlock</button></div>`).join("")||"<p>No verified workers to show yet.</p>";
+}
+async function load(){
+  if(!SCRIPT_URL){jobs=SAMPLE_JOBS;workers=SAMPLE_WORKERS}
+  else{try{jobs=(await (await fetch(SCRIPT_URL+"?action=jobs")).json()).jobs||[];workers=(await (await fetch(SCRIPT_URL+"?action=workers")).json()).workers||[]}catch(e){}}
+  if(!SCRIPT_URL||PAYMENT_MODE!=="live")$("#demoNote").hidden=false;
+  renderJobs();renderWorkers();
+}
+function show(tab){["employer","worker","requirement"].forEach(t=>{$("#f-"+t).hidden=t!==tab;$("#t-"+t).setAttribute("aria-selected",t===tab)})}
+
+/* ============ Events ============ */
+document.addEventListener("click",e=>{
+  const g=e.target.closest("[data-go]");if(g){show(g.dataset.go);$("#join").scrollIntoView({behavior:"smooth"})}
+  const p=e.target.closest("[data-plan]");if(p){show(p.dataset.kind);$("#f-"+p.dataset.kind).querySelector("select[name=plan]").value=p.dataset.plan;$("#join").scrollIntoView({behavior:"smooth"})}
+  const t=e.target.closest(".tab");if(t)show(t.id.slice(2));
+  const a=e.target.closest("[data-apply]");if(a){const j=jobs.find(x=>String(x.id)===a.dataset.apply);applyJob=j;$("#aRole").textContent=j.role;$("#aCo").textContent=j.company+" · "+j.city;$("#aMsg").textContent="";$("#applyDlg").showModal()}
+});
+["q","fcity"].forEach(i=>$("#"+i).addEventListener("input",renderJobs));["fcat","fwage","fsort"].forEach(i=>$("#"+i).addEventListener("change",renderJobs));
+let applyJob=null;
+$("#aCancel").onclick=()=>$("#applyDlg").close();
+$("#applyForm").addEventListener("submit",async e=>{
+  e.preventDefault();const d=Object.fromEntries(new FormData(e.target));const m=$("#aMsg");m.className="msg";m.textContent="Sending...";
+  try{const token=await proof(d.phone);const r=await api({type:"application",token,jobId:applyJob.id,role:applyJob.role,company:applyJob.company,name:d.name,phone:d.phone});if(!r.ok)throw 0;m.className="msg ok";m.textContent="Applied. We will call you on "+d.phone+".";e.target.reset()}
+  catch(_){m.className="msg err";m.textContent="Could not send. Try again."}
+});
+
+/* Registration then payment */
+$$("form[data-type]").forEach(f=>f.addEventListener("submit",async e=>{
+  e.preventDefault();
+  const msg=f.querySelector(".msg"),btn=f.querySelector("button[type=submit]");
+  const data=Object.fromEntries(new FormData(f));data.type=f.dataset.type;
+  data.ref=(data.type==="worker"?"WK-":data.type==="employer"?"EM-":"RQ-")+Math.random().toString(36).slice(2,7).toUpperCase();
+  msg.className="msg";msg.textContent="Saving...";btn.disabled=true;
+  try{
+    data.token=await proof(data.phone);const r=await api(data);if(!r.ok){if(r.error==="OTP_REQUIRED")delete proofs[data.phone];throw new Error(r.error||"Failed")}
+    const plan=[...PLANS.industry,...PLANS.worker].find(p=>p.id===data.plan);
+    msg.className="msg ok";
+    msg.innerHTML="Saved. Your reference is <strong>"+data.ref+"</strong>."+(data.type==="worker"?idCard(data):"");
+    f.reset();
+    if(data.type==="requirement")load();
+    else if(plan&&plan.amt>0)openPay({kind:data.type,plan:plan.id,amount:plan.amt,name:data.name||data.contact,phone:data.phone,ref:data.ref,msg});
+    else if(plan)msg.innerHTML+="<br>Our coordinator will call you within one working day.";
+  }catch(err){msg.className="msg err";msg.textContent=err.message==="cancelled"?"Mobile number not verified, so nothing was saved.":"Could not save. Check your connection and try again."}
+  btn.disabled=false;
+}));
+function idCard(d){return `<div class="idcard"><h3>${esc(d.name)}</h3><p>${esc(d.category)} · ${esc(d.city)}</p><p>Worker ID: <strong>${d.ref}</strong></p><p>Show this to our coordinator.</p></div>`}
+
+/* Checkout */
+let order=null;
+function openPay(o){
+  order=o;$("#payFor").textContent=o.plan+" · "+inr(o.amount);$("#payMsg").textContent="";$("#payGo").disabled=false;
+  $("#payGo").textContent="Pay "+inr(o.amount)+(PAYMENT_MODE==="live"?"":" (demo)");
+  $("#gwList").innerHTML=Object.entries(GATEWAYS).map(([k,g],i)=>`<label class="gw"><input type="radio" name="gw" value="${k}" ${i?"":"checked"}><span>${g.label}<small>${g.note}</small></span></label>`).join("");
+  $("#payDlg").showModal();
+}
+$("#payLater").onclick=()=>{$("#payDlg").close();order.msg.innerHTML+="<br>Payment pending. We will send you a payment link.";api({type:"payment",...pick(order),gateway:"-",txn:"",status:"Unpaid",mode:PAYMENT_MODE})};
+const pick=o=>({ref:o.ref,kind:o.kind,plan:o.plan,amount:o.amount,phone:o.phone,token:proofs[o.phone]});
+$("#payGo").onclick=async()=>{
+  const gw=document.querySelector("input[name=gw]:checked").value,m=$("#payMsg"),b=$("#payGo");
+  b.disabled=true;m.className="msg";m.textContent="Processing...";
+  try{
+    const r=await ADAPTERS[gw](order);
+    await api({type:"payment",...pick(order),gateway:r.gateway,txn:r.id,status:r.pending?"Pending":(PAYMENT_MODE==="live"?"Paid":"Paid (demo)"),mode:PAYMENT_MODE});
+    $("#payDlg").close();
+    order.msg.innerHTML+="<br>"+(r.pending?"Pay to our UPI ID and share the reference. We will confirm.":"Payment received. Reference "+esc(r.id)+". Welcome aboard.");
+  }catch(err){m.className="msg err";m.textContent=err.message||"Payment failed. Try another method.";b.disabled=false}
+};
+
+/* ============ Mobile OTP ============ */
+let proofs={},session=null,otpRes,otpRej,otpPurpose,otpDone=true;
+try{proofs=JSON.parse(sessionStorage.getItem("proofs")||"{}")}catch(_){}
+const saveProofs=()=>{try{sessionStorage.setItem("proofs",JSON.stringify(proofs))}catch(_){}};
+async function proof(phone){if(proofs[phone])return proofs[phone];return (await getOtp(phone,"register")).token}
+function getOtp(phone,purpose){
+  return new Promise((res,rej)=>{
+    otpRes=res;otpRej=rej;otpPurpose=purpose;otpDone=false;
+    $("#oPhone").value=phone||"";$("#oPhone").readOnly=!!phone;$("#oCode").value="";$("#oMsg").textContent="";
+    $("#oS1").hidden=false;$("#oS2").hidden=true;
+    $("#oTitle").textContent=purpose==="login"?"Employer login":"Verify your mobile";
+    $("#otpDlg").showModal();if(phone)sendOtp();
+  });
+}
+async function sendOtp(){
+  const p=$("#oPhone").value,m=$("#oMsg");
+  if(!/^[0-9]{10}$/.test(p)){m.className="msg err";m.textContent="Enter a 10-digit mobile number.";return}
+  m.className="msg";m.textContent="Sending OTP...";
+  const r=await api({type:"otpSend",phone:p,purpose:otpPurpose});
+  if(!r.ok){m.className="msg err";m.textContent=r.error||"Could not send OTP.";$("#oS1").hidden=false;$("#oS2").hidden=true;return}
+  $("#oS1").hidden=true;$("#oS2").hidden=false;m.textContent="";
+  $("#oInfo").textContent="OTP sent to +91 "+p+"."+(r.demoOtp?" Demo mode, your OTP is "+r.demoOtp+".":"");
+  $("#oCode").focus();
+}
+$("#oSend").onclick=sendOtp;$("#oResend").onclick=sendOtp;
+$("#oCancel1").onclick=()=>$("#otpDlg").close();
+$("#oVerify").onclick=async()=>{
+  const phone=$("#oPhone").value,m=$("#oMsg");m.className="msg";m.textContent="Checking...";
+  const r=await api({type:"otpVerify",phone,otp:$("#oCode").value.trim(),purpose:otpPurpose});
+  if(!r.ok){m.className="msg err";m.textContent=r.error||"Wrong OTP.";return}
+  proofs[phone]=r.token;saveProofs();otpDone=true;$("#otpDlg").close();otpRes({token:r.token,phone});
+};
+$("#otpDlg").addEventListener("close",()=>{if(!otpDone){otpDone=true;otpRej(new Error("cancelled"))}});
+
+/* ============ Employer login and dashboard ============ */
+let dw=[],dInfo=null;
+$("#dcat").innerHTML+=CATEGORIES.map(c=>`<option>${c}</option>`).join("");
+$("#loginBtn").onclick=async()=>{
+  try{const r=await getOtp("","login");session={phone:r.phone,token:r.token};await loadDash();$("#dash").scrollIntoView({behavior:"smooth"})}catch(_){}
+};
+async function loadDash(){
+  $("#dash").hidden=false;
+  const r=await api({type:"listWorkers",...session});
+  if(!r.ok){dw=[];dInfo=null;$("#dInfo").textContent=r.error==="NOT_ACTIVE"?"Your account is not active yet. It activates after your payment is confirmed or our team approves it.":"Your session expired. Click Employer login to sign in again.";renderDash();return}
+  dw=r.workers;dInfo=r;renderDash();
+}
+function renderDash(){
+  if(dInfo)$("#dInfo").textContent="Plan: "+dInfo.plan+". Contacts used: "+dInfo.used+(dInfo.limit?" of "+dInfo.limit:" (unlimited)")+".";
+  const q=$("#dq").value.toLowerCase(),c=$("#dcat").value;
+  const list=dw.filter(w=>(!c||w.category===c)&&(!q||(w.name+" "+w.city).toLowerCase().includes(q)));
+  $("#dlist").innerHTML=list.map(w=>`<div class="wcard"><strong>${esc(w.name)}</strong> <span class="tag v">Verified</span><div class="meta">${esc(w.category)} · ${esc(w.city)} · ${esc(w.experience)} yrs${w.wage?" · expects "+inr(w.wage)+"/day":""}</div>${w.phone?`<div style="margin-top:8px"><strong>+91 ${esc(w.phone)}</strong></div>`:`<button class="btn sm" style="margin-top:8px" data-reveal="${esc(w.ref)}">Reveal contact</button>`}</div>`).join("")||"<p>No workers match.</p>";
+}
+$("#dq").addEventListener("input",renderDash);$("#dcat").addEventListener("change",renderDash);
+$("#dLogout").onclick=()=>{session=null;dw=[];$("#dash").hidden=true};
+$("#dlist").addEventListener("click",async e=>{
+  const b=e.target.closest("[data-reveal]");if(!b)return;b.disabled=true;
+  const r=await api({type:"revealContact",...session,ref:b.dataset.reveal});
+  if(r.ok){dw.find(x=>x.ref===b.dataset.reveal).phone=r.phone;dInfo.used=r.used;renderDash()}
+  else{b.disabled=false;$("#dInfo").textContent=r.error==="LIMIT"?"You have used all contacts in your plan. Upgrade to unlock more.":"Could not reveal. Please log in again."}
+});
+
+renderPlans();load();
+</script>
+</body>
+</html>
